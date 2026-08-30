@@ -23,3 +23,11 @@ export {
   createMockTransactionSubmissionAdapter,
   type MockTransactionStatusConfig
 } from '../transactions';
+
+export {
+  DashboardMockVaultClient,
+  createDashboardMockVaultClient,
+  createDashboardMockClientForScenario,
+  type DashboardMockVaultClientOptions,
+  type MockVaultState
+} from './dashboardMockVaultClient';

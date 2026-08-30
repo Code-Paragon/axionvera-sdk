@@ -201,6 +201,54 @@ The SDK includes comprehensive mock utilities for integration-style testing:
 - Transaction polling uses vitest mocked timers for fast tests
 - All scenarios (success, failure, timeout, disconnection) are testable
 
+### Dashboard Mock Vault Client
+
+For dashboard UI development and testing, the SDK provides a comprehensive dashboard mock vault client:
+
+- `DashboardMockVaultClient` - In-memory vault state management with full CRUD operations
+- `createDashboardMockVaultClient()` - Factory for creating configured mock clients
+- `createDashboardMockClientForScenario()` - Pre-configured scenarios (empty, active, rewards, error)
+- `useDashboardMockVault()` - React hook for dashboard integration
+- `useDashboardMockScenario()` - React hook for pre-configured scenarios
+
+**Dashboard Mock Features:**
+- Full vault operations: `getInfo()`, `getBalance()`, `getPendingRewards()`, `deposit()`, `withdraw()`, `claimRewards()`
+- In-memory state management with deterministic behavior
+- Transaction history tracking and retrieval
+- State manipulation for testing edge cases
+- ContractInvoker and VaultContract compatibility
+- Zero network calls required
+
+**Dashboard Integration Example:**
+```ts
+import { DashboardMockVaultClient } from '@axionvera/core';
+import { useDashboardMockVault } from '@axionvera/react';
+
+// Create mock client
+const client = new DashboardMockVaultClient({
+  contractId: 'CVAULT...',
+  initialBalances: { 'GUSER...': 1000n },
+  initialRewards: { 'GUSER...': 50n }
+});
+
+// Use in React dashboard
+function VaultDashboard() {
+  const { client, state, deposit, withdraw } = useDashboardMockVault({
+    clientOptions: { contractId: 'CVAULT...' },
+    autoInitialize: true
+  });
+
+  return (
+    <div>
+      <button onClick={() => deposit('GUSER...', 100n)}>Deposit</button>
+      <button onClick={() => withdraw('GUSER...', 50n)}>Withdraw</button>
+    </div>
+  );
+}
+```
+
+See [`examples/dashboard-mock-flow.tsx`](./examples/dashboard-mock-flow.tsx) for comprehensive dashboard examples.
+
 ### Current Implementation Status
 
 **Implemented:**

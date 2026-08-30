@@ -4,3 +4,4 @@ export * from './useTransactionStatus';
 export * from './useVault';
 export * from './useWallet';
 export * from './VaultDemo';
+export * from './useDashboardMockVault';
